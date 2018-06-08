@@ -1,4 +1,4 @@
-# 解决cordova android端键盘弹出后样式混乱
+### 解决cordova android端键盘弹出后样式混乱
 
 　　最近在使用cordova开发hybrid app的过程中，遇到了一个问题。在android客户端的登录页面，当点击输入框弹出软键盘后，登录页的背景图片出现了上移，底部留下了一片白色。但是这个问题在IOS端却没有出现。 
 
@@ -25,7 +25,7 @@
 
     + adjustPan：当前窗口的内容将自动移动以便当前焦点从不被键盘覆盖和用户能总是看到输入内容的部分
 
-　默认情况下，cordova项目中的设置为 `android:windowSoftInputMode="adjustResize`,这个选项会调整屏幕的大小，出现body压缩的原因就是使用了该属性。通过将 adjustResize 选项修改为 adjustUnspecified ,使系统不调整窗口布局,即可解决布局混乱的问题。 
+　默认情况下，cordova项目中的设置为 `android:windowSoftInputMode="adjustResize"`,这个选项会调整屏幕的大小，出现body压缩的原因就是使用了该属性。通过将 adjustResize 选项修改为 adjustUnspecified ,使系统不调整窗口布局,即可解决布局混乱的问题。 
 
 　　但是，在使用了该方法后，又衍生出来了一个新的问题。当键盘弹出时，若输入框在窗口的下半部分，键盘弹出后会遮住输入框，导致用户看不到自己输入的内容，这样体验非常不好。如果输入框在屏幕上半部分，不会被键盘遮住，可以使用该方式。
 
