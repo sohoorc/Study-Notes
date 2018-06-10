@@ -17,4 +17,4 @@
 <preference name="webviewbounce" value="false" />
 <preference name="DisallowOverscroll" value="true" />
 ```
-这样，我们就关闭了iOS的webview出现的弹性滚动效果。
+这样，我们就关闭了iOS的webview拖拽到边界时出现的弹性效果。
