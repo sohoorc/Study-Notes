@@ -4,7 +4,8 @@
 原博客地址：[www.gwtcoder.me](http://www.gwtcoder.me/)
 
 #### React
-[react-router 源码学习](https://github.com/sohoorc/react-router-source-learning)
+[react-router4 源码学习](https://github.com/sohoorc/react-router-source-learning)
+[react-router4 实现Code Splitting](https://github.com/sohoorc/Study-Notes/blob/master/notes/react/react-router4%20%E5%AE%9E%E7%8E%B0%E6%8C%89%E9%9C%80%E5%8A%A0%E8%BD%BD%E4%BB%A3%E7%A0%81%E6%8B%86%E5%88%86.md)
 
 #### mobile
 [为iOS端hybrid app添加惯性滚动，并关闭页面到边界后拖拽出现的白色背景](https://github.com/sohoorc/Study-Notes/blob/master/notes/mobile/%E4%B8%BAiOS%E7%AB%AFhybrid%20app%E6%B7%BB%E5%8A%A0%E6%83%AF%E6%80%A7%E6%BB%9A%E5%8A%A8%EF%BC%8C%E5%B9%B6%E5%85%B3%E9%97%AD%E9%A1%B5%E9%9D%A2%E5%88%B0%E8%BE%B9%E7%95%8C%E5%90%8E%E6%8B%96%E6%8B%BD%E5%87%BA%E7%8E%B0%E7%9A%84%E7%99%BD%E8%89%B2%E8%83%8C%E6%99%AF.md)
