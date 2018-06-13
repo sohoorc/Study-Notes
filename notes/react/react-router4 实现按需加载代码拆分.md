@@ -9,7 +9,7 @@
 在配置文件中(webpack.config或.babelrc或package.joson中三者选其一)添加'syntax-dynamic-import'
 
 ## 第三步
-使用 react-loadable
+使用 react-loadable:
 ```
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
@@ -30,6 +30,7 @@ const loading = (props) => {
   delay: 1000  // 设定若加载时间小于某个时间 则不显示加载动画，以防闪屏
 }
 
+// 通过 import() 动态引入模块
 const Manager = Loadable({
   loader: () => import('./views/manager/manager'),
   ...loaderConfig
@@ -57,3 +58,6 @@ ReactDOM.render(
   document.getElementById('root'));
 registerServiceWorker();
 ```
+这样，我们就实现了Code Splitting。
+
+最后，我们可以去看react-loadable的源码，其实实现的方式很简单。若不想使用react-loadable，我们也可以自己动手实现一个类似功能的组件。
