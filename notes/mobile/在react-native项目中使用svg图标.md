@@ -21,13 +21,12 @@ const Tianjia = props => (
 export default Tianjia;
 ```
 
-这样虽然解决了问题，但是若存在多个图标，一个个绘制不免有些麻烦。为此，我们可以使用一个批处理工具 [svgr](https://github.com/smooth-code/svgr)。该工具能够获取到svg图标并批量生成react 或 react native组件。生成后的组件，和普通的react组件一样，使用起来非常方便。通过import引用该组件，即可展示图标。 
+这样虽然解决了问题，但若存在多个图标，一个个绘制不免有些麻烦。为此，我们可以使用一个批处理工具 [svgr](https://github.com/smooth-code/svgr)。该工具能够获取到svg图标并批量生成react 或 react native组件。生成后的组件，就是普通的react组件，使用起来非常方便。通过import引用该组件，即可展示图标。 
 
 安装方式：`npm install @svgr/cli -g`
 
-该工具的使用方法也很简单，仅需一行命令:`svgr --native  ./图标或图标文件夹路径 --out-dir ./期望输出的路径`
+该工具的使用方法也很简单，仅需一行命令:`svgr --native  ./图标或图标文件夹路径 --out-dir ./期望输出的路径`，我们就将svg图标生成了react-native的组件。我们需要展示图标时，只需要通过import引入该组件，并为组件设置宽高，就能显示该图标。
 
-这样，我们就能将svg图标批量转换成react-native组件。
 ```
 import Xuexiao from './../static/svg/Xuexiao'
 

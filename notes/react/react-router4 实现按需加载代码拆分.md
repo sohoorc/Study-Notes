@@ -67,6 +67,4 @@ ReactDOM.render(
 registerServiceWorker();
 ```
 
-这样，我们就实现了Code Splitting。
-
 最后，我们可以去看`react-loadable`的源码，其实实现的方式很简单。若不想使用`react-loadable`，我们也可以自己动手实现一个类似功能的组件。
