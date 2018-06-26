@@ -1,5 +1,5 @@
 ### 个人踩坑记录
-　　之前使用hexo博客，并托管在coding上。由于最近coding的静态托管服务植入了广告，所以将自己的学习记录迁移到github上来。更稳定，并且方便维护。
+　　之前使用hexo博客，并托管在coding上。由于最近coding的静态托管服务植入了广告，所以将自己的学习记录迁移到github上来。部分文章为自己原创，还有一部分为自己在学习过程中觉得不错的文章的原文链接。
 
 原博客地址：[www.gwtcoder.me](http://www.gwtcoder.me/)
 
@@ -14,3 +14,14 @@
 [解决cordova android端键盘弹出后样式混乱](https://github.com/sohoorc/Study-Notes/blob/master/notes/mobile/%E8%A7%A3%E5%86%B3cordova%20android%E7%AB%AF%E9%94%AE%E7%9B%98%E5%BC%B9%E5%87%BA%E6%97%B6%E6%A0%B7%E5%BC%8F%E6%B7%B7%E4%B9%B1.md)
 
 [在react-native项目中使用svg图标](https://github.com/sohoorc/Study-Notes/blob/master/notes/mobile/%E5%9C%A8react-native%E9%A1%B9%E7%9B%AE%E4%B8%AD%E4%BD%BF%E7%94%A8svg%E5%9B%BE%E6%A0%87.md)
+
+[ios打包发布流程](https://www.jianshu.com/p/817686897ec1?open_source=weibo_search)
+
+[此像素非彼像素](http://www.w3cplus.com/css/A-pixel-is-not-a-pixel-is-not-a-pixel.html)
+
+[Supporting Different Screens in Web Apps](https://developer.android.com/guide/webapps/targeting)
+
+### 流媒体
+[HTTP Live Streaming](https://developer.apple.com/streaming/)
+
+[Rtmp 协议规范](https://chenlichao.gitbooks.io/rtmp-zh_cn/content/1-introduction.html)
