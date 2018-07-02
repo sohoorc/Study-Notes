@@ -13,6 +13,7 @@
 - 缩进
 - 引用规范
 - lang
+- meta
 
 ## CSS/SASS/LESS
 - 命名
@@ -141,7 +142,7 @@
   8. componentWillUpdate 上面的方法返回 true， 模块将重新渲染
   9. componentDidUpdate 模块渲染结束
   10. componentWillUnmount 模块将从DOM中清除, 做一些清理任务
-  11. 点击回调或者事件处理器 如 onClickSubmit() 或 onChangeDescription()
+  11. 点击回调或者事件处理器 如 hadleClick() 或 handleChange()
   12. render 里的 getter 方法 如 getSelectReason() 或 getFooterContent()
   13. render render() 方法
 
