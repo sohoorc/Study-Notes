@@ -1,8 +1,8 @@
 # 在react-native项目中使用svg图标
 
-在Rn的项目中要使用svg图标，我们可以使用 [react-native-svg](https://github.com/react-native-community/react-native-svg) 这个库。由于我使用的create-react-native-app 的方法初始化项目，项目中默认是带了这个库的，所以不需要另外进行安装。若使用其他方法初始化，可以参照文档自行安装。
+在Rn的项目中要使用svg图标，我们可以使用 [react-native-svg](https://github.com/react-native-community/react-native-svg) 这个插件。由于我使用的create-react-native-app 的方法初始化项目，项目中默认是带了这个插件的，所以不需要另外进行安装。若使用其他方法初始化，可以参照文档自行安装。
 
-`react-native-svg`默认只提供了几个简单的图形，所以我们在使用自定义的svg图标时，需要使用Path对svg图标中的path进行绘制。
+在默认情况下，`react-native-svg`只提供了几个简单的图形。所以我们在使用自定义的svg图标时，需要使用Path对svg图标中的path进行绘制。
 
 例如：
 ```
