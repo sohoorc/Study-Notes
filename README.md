@@ -1,7 +1,9 @@
-### 个人踩坑记录
-　　之前使用hexo博客，并托管在coding上。由于最近coding的静态托管服务植入了广告，所以将自己的学习记录迁移到github上来。部分笔记是自己的踩坑记录，还有一部分是在学习过程中收集的个人觉得不错的文章。
+### 个人学习和踩坑记录
+　　之前使用hexo博客，并托管在coding上。由于最近coding的静态托管服务植入了广告，所以将自己的学习记录迁移到github上来。部分文章为自己的笔记，还有一部分为自己在学习过程中觉得不错的文章的<b>原文链接</b>。
 
 原博客地址：[www.gwtcoder.me](http://www.gwtcoder.me/)
+#### HTTP
+[图解http学习总结]()
 
 #### React
 [react-router4 源码学习](https://github.com/sohoorc/react-router-source-learning)
