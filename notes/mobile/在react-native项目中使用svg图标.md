@@ -25,9 +25,10 @@ export default Tianjia;
 
 安装方式：`npm install @svgr/cli -g`
 
-该工具的使用方法也很简单，仅需一行命令:`svgr --native  ./图标或图标文件夹路径 --out-dir ./期望输出的路径`，我们就将svg图标生成了react-native的组件。我们需要展示图标时，只需要通过import引入该组件，并为组件设置宽高，就能显示该图标。
+该工具的使用方法也很简单，仅需一行命令:`svgr --native  图标或图标文件夹路径 --out-dir 期望输出的路径`，我们就将svg图标生成了react-native的组件。我们需要展示图标时，只需要通过import引入该组件，并为组件设置宽高，就能显示该图标。
 
 ```
+// 示例
 import Xuexiao from './../static/svg/Xuexiao'
 
 <Xuexiao
