@@ -1,6 +1,9 @@
 # 个人学习和踩坑记录
 　　之前使用hexo博客，并托管在coding上。由于最近coding的静态托管服务植入了广告，所以将自己的学习记录迁移到github上来。部分文章为自己的笔记，还有一部分为自己在学习过程中觉得不错的文章的<b>原文链接</b>。
 
+## 计算机基础
+[图解HTTP学习笔记](https://github.com/sohoorc/Study-Notes/blob/master/notes/basic/%E5%9B%BE%E8%A7%A3http%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.md)
+
 ## React
 [react-router4 源码学习](https://github.com/sohoorc/react-router-source-learning)
 
