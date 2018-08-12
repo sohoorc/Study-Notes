@@ -1,4 +1,4 @@
-# 图解htpp学习笔记
+# 图解HTTP学习笔记
 
 ## 1 TCP/IP协议族
 
@@ -201,4 +201,120 @@ HTTP/2 保留了 HTTP/1.1 的大部分语义，例如请求方法、状态码乃
 什么是HTTP报文？  
 用于HTTP协议交互的信息被称为HTTP报文。请求端的HTTP报文叫做请求报文，响应端的叫做响应报文。
 
+### 3.2 HTTP报文结构
 
+请求/响应报文由以下内容组成：
+
+| 结构 | 说明 |
+| ----- | ----- |
+| 报文首部 | 服务器端或客户端处理的请求或响应的内容以及属性 |
+| 空行（CR+LF）| CR（回车符:16进制的0x0d）和LF（换行符：16进制0x0a）|
+| 报文主体 | 应被发送的数据 |
+
+报文首部的组成：
+- 请求行，例如：GET /logo.gif HTTP/1.1或状态码行，例如：HTTP/1.1 200 OK，
+
+- 首部字段：包含表示请求的各种条件和属性的各类首部。 一般有4种首部：通用首部、请求首部、响应首部、实体首部
+
+- 其他： 可能包含HTTP的RFC里未定义的首部（Cookie等）。
+
+### 3.3 HTTP编码提升传输速率
+
+在HTTP的传输过程中，可以通过编码提升传输速率。通过在传输时编码，能有效的处理大量的访问请求。HTTP压缩是一种内置到网页服务器和网页客户端中以改进传输速度和带宽利用率的方式。
+
+#### 3.3.1 报文主体和实体主体的差异：
+
+- 报文：是HTTP通信中的基本单位，由8位字节流组成，通过HTTP通信传输。
+
+- 实体：作为请求或响应的有效载荷数据被传输，其内容由实体首部和实体主体组成。
+
+- 差异：通常，报文主体等于实体主体。只有当传输中进行编码操作时，实体主体内容发生变化，才导致它和报文主体产生差异。
+
+#### 3.3.2 压缩传输内容的编码
+
+压缩的实现：  
+
+在HTTP中有两种不同的方式可以完成压缩。在较低层级，Transfer-Encoding头可以指示HTTP消息的有效载荷被压缩。在较高层级，Content-Encoding头可以指示一个被转码、缓存或引用的资源已压缩。使用Content-Encoding的压缩比Transfer-Encoding有更广泛的支持，并且某些浏览器不宣告Transfer-Encoding压缩以避免触发服务器的缺陷。
+
+压缩方案的协商：
+
+> 内容来自维基百科
+
+在大多数情况中（不包括SDCH），协商使用两个步骤完成，这描述在RFC 2616：
+
+1. 网页客户端在HTTP请求的头部通告其支持的压缩方案为一个标记列表（tokens）。对于Content-Encoding，这个列表称作Accept-Encoding；对于Transfer-Encoding，该字段被称为TE。
+
+```
+GET /encrypted-area HTTP/1.1
+Host: www.example.com
+Accept-Encoding: gzip, deflate
+
+```
+
+2. 如果服务器支持一种或多种压缩方案，输出的数据可能用一种或多种双方支持的方法压缩。如果是这种情况，服务器将在HTTP响应中添加一个Content-Encoding或Transfer-Encoding字段表明使用的方案，用逗号分隔。
+
+```
+HTTP/1.1 200 OK
+Date: Tue, 27 Feb 2018 06:03:16 GMT
+Server: Apache/1.3.3.7 (Unix)  (Red-Hat/Linux)
+Last-Modified: Wed, 08 Jan 2003 23:11:55 GMT
+Accept-Ranges: bytes
+Content-Length: 438
+Connection: close
+Content-Type: text/html; charset=UTF-8
+Content-Encoding: gzip
+```
+
+常见的几种内容编码(Content-Encoding标记)：
+
+- gzip GNU zip格式（定义于RFC 1952）。此方法截至2011年3月，是应用程序支持最广泛的方法。
+- compress （UNIX系统的标准压缩）UNIX的“compress”程序的方法（历史性，不推荐大多数应用使用，应该使用gzip或deflate）
+- deflate（zlib）基于deflate算法（定义于RFC 1951）的压缩，使用zlib数据格式（RFC 1950）封装
+- identity（不进行编码）这是内容编码的默认值。
+- br  Brotli，一种新的开源压缩算法，专为HTTP内容的编码而设计，已在Mozilla Firefox 44中实现，并且Chromium正准备实施
+
+#### 3.4 发送多种数据的多部分对象集合
+
+发送的一份报文主体内可含有多类型实体。通常在图片或者文本上传时使用。在HTTP报文中使用多部分对象集合时，需要在首部字段里加上Content-type。
+
+多部分对象集合包含的对象：
+
+- multipart/form-data : 在web表单文件上传时使用。
+
+- multipart/byteranges ：状态码206响应报文包含了多个范围的内容使用。
+
+#### 3.5 获取部分内容的范围请求
+
+执行范围请求时，会用到首部字段Range来制定资源的byte范围。针对范围请求，响应会返回状态码206的响应报文。并且会在首部字段Content-Type表明multipart/byteranges后返回响应报文。若服务端无法响应范围请求，则会返回状态码200 OK和完整的实体内容。
+
+byte范围的指定形式如下：
+
+- Range:bytes=5001-10000  获取5001-10000字节
+
+- Range:bytes=5001-   获取5001后全部的
+
+- Range:bytes=-5001,6000-7000   从一开始到5001字节和6000-7000字节的多重范围
+
+#### 内容协商返回最合适的内容
+
+内容协商机制是指客户端和服务端就响应的资源进行交涉，然后提供给客户端最为合适的资源。
+
+内容协商判断首部字段:
+
+- Accept
+
+- Accept-Charset
+
+- Accept-Encoding
+
+- Accept-Language
+
+- Content-Language
+
+内容协商技术:
+
+- 服务器驱动协商：由服务器进行内容协商，以请求首部字段为参考，在服务器自动处理。
+
+- 客户端驱动协商：用户在浏览器页面中手动选择。
+
+- 透明协商：是服务器和客户端驱动的结合体，是有服务器端和客户端各自进行内容协商的一种方法。

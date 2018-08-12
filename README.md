@@ -4,7 +4,7 @@
 
 ## 计算机基础
 
-[图解HTTP学习笔记](https://github.com/sohoorc/Study-Notes/blob/master/notes/basic/%E5%9B%BE%E8%A7%A3http%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.md)
+[HTTP学习笔记](https://github.com/sohoorc/Study-Notes/blob/master/notes/basic/%E5%9B%BE%E8%A7%A3http%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.md)
 
 ## React
 
