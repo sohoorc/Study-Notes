@@ -15,10 +15,10 @@ function bundleCompress(path) {
 }
 
 function bundle(path){
-  let date =  new Date();
-  let hours = date.getHours();
-  let min = date.getMinutes();
-  let sec = date.getSeconds();
+  let date =  new Date(),
+    hours = date.getHours(),
+    min = date.getMinutes(),
+    sec = date.getSeconds();
 
   let fileName = 'XXXX系统-'+date.toLocaleDateString().replace(/\-/g,'')+hours+min+sec;
   let output = fs.createWriteStream('./bundles/' + fileName + '.zip');
