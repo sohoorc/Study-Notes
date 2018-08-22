@@ -11,7 +11,6 @@ function bundleCompress(path) {
       bundle(path)
     }
   })
-
 }
 
 function bundle(path){
