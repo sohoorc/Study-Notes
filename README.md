@@ -18,7 +18,7 @@
 
 ## mobile
 
-允许IOS访问HTTP请求： 
+允许IOS访问HTTP请求：  
 为info.plist添加App Transport Security Settings -》 Allow Arbitrary Loads:true
 
 [ios打包发布流程](https://www.jianshu.com/p/817686897ec1?open_source=weibo_search)
