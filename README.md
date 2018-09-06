@@ -2,13 +2,13 @@
 
 　　之前使用hexo博客，并托管在coding上。由于最近coding的静态托管服务植入了广告，所以将自己的学习记录迁移到github上来。部分文章为自己的笔记，还有一部分为自己在学习过程中觉得不错的文章的<b>原文链接</b>。
 
-## 计算机基础
+# 计算机基础
 
 [HTTP学习笔记](https://github.com/sohoorc/Study-Notes/blob/master/notes/basic/%E5%9B%BE%E8%A7%A3http%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.md)
 
 ---
 
-## React
+# React
 
 [react-router4 源码学习](https://github.com/sohoorc/react-router-source-learning)
 
@@ -16,19 +16,19 @@
 
 ---
 
-## mobile
+# mobile
 
 允许IOS访问HTTP请求：  
 为info.plist添加App Transport Security Settings -》 Allow Arbitrary Loads:true
 
 [ios打包发布流程](https://www.jianshu.com/p/817686897ec1?open_source=weibo_search)
 
-### react-native
+## react-native
 
 [在react-native项目中使用svg图标](https://github.com/sohoorc/Study-Notes/blob/master/notes/mobile/%E5%9C%A8react-native%E9%A1%B9%E7%9B%AE%E4%B8%AD%E4%BD%BF%E7%94%A8svg%E5%9B%BE%E6%A0%87.md)
 
 
-### webapp&&hybirdApp
+## webapp&&hybirdApp
 
 取消webapp中长按屏幕所触发的系统事件
 ```
