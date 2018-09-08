@@ -508,3 +508,126 @@ HTTP首部字段（英语：HTTP header fields）是指在超文本传输协议�
 #### 格式
 
 协议头的字段，是在请求（request）或响应（response）行（一条消息的第一行内容）之后传输的。协议头的字段是以明文的字符串格式传输，是以冒号分隔的键名与键值对，以回车(CR)加换行(LF)符号序列结尾。协议头部分的结尾以一个空白字段标识，结果就是，也就是传输两个连续的CR+LF。
+
+
+#### 首部字段的组成
+
+- 通用首部字段：请求报文和响应报文两方都会使用的首部。
+		
+  - Cache-Control:控制缓存行为
+  
+  - Connection：逐跳首部、连接的管理
+  
+  - Date：创建报文的时间
+  
+  - Pragma：报文指令
+  
+  - Trailer：报文末端的首部一览
+  
+  - Transfer-Encoding：指定报文主体的传输编码方式
+  
+  - Upgrade：升级为其他协议
+  
+  - Via：代理服务器的相关信息
+  
+  - Warning：错误通知
+
+- 请求首部字段:从客户端向服务端发送请求报文时使用的首部。补充了请求的附加内容、客户端信息、相应内容相关优先级信息。
+
+  - Accept：用户代理可处理的媒体类型
+	
+  - Accept-Charset：优先的字符集
+	
+  - Accept-Encoding：优先的内容编码
+	
+  - Accept-Language：优先的语言
+	
+  - Authorization：Web的认证信息
+	
+  - Except:期待服务器的特定行为
+	
+  - From：用户的电子邮箱地址
+	
+  - Host：请求资源所在的服务器
+	
+  - If-Match：比较实体标记（Etag）
+	
+  - If-None-Match：比较实体标记（与If-Match相反）
+	
+  - If-Modified-Since：比较资源的更新时间
+	
+  - If-Unmodified-Since：比较资源的更新时间（与If-Modified-Since相反）
+	
+  - If-Range：资源未更新时发送实体Byte的范围请求
+	
+  - Max-Forwards：最大传输逐跳数
+	
+  - Proxy-Authorization：代理服务器要求客户端的认证信息
+	
+  - Range：实体的字节范围要求
+	
+  - Referer：请求URI的原始获取方
+	
+  - TE：传世编码优先级
+	
+  - User-Agent：HTTP客户端程序的信息
+
+- 响应首部字段：从服务器端向客户端返回响应报文时使用的首部。补充了响应附加内容，也会要求客户端附加额外的内容信息。
+
+  - Accept-Ranges：是否接受字节范围请求
+  
+  - Age：推算资源创建经过时间
+  
+  - Etage：资源的匹配信息
+  
+  - Location：令客户端重新定向至指定URI
+  
+  - Proxy-Authenticate：代理服务器对客户端的认证信息
+  
+  - Retry-After：对再次发起请求的时机要求
+  
+  - Server：HTTP服务器的安装信息
+  
+  - Vary：代理服务器缓存的管理信息
+  
+  - WWW-Authenticate：服务器对客户端的认证信息
+
+- 实体首部字段：针对请求报文和响应报文的实体部分使用的首部。补充了资源内容更新时间等与实体有关的信息。
+  
+  - Allow：资源可支持的HTTP方法
+  
+  - Content-Encoding：实体主题适用的编码方式
+  
+  - Content-Language：实体主体的自然语言
+  
+  - Content-Length：实体主体的大小（单位：字节）
+  
+  - Content-Location：替代对应的资源URI
+  
+  - Content-MD5：实体主体的报文摘要
+  
+  - Content-Range：实体主体的位置范围
+  
+  - Content-Type：实体主体的媒体类型
+  
+  - Expires：实体主体过期的日期时间
+  
+  - Last-Mondified：资源的最后修改日期时间
+
+#### End-to-end首部和Hop-by-hop首部
+
+端到端首部（End-to-end Header）：  
+分在此类别的首部会转发给请求/响应的最终接收目标，且必须要存在由缓存生成的响应中，另外规定它必须被转发。
+
+逐跳首部（Hop-by-hop Header）：  
+分在此类别中的首部只对单词转发有效，会因通过缓存或代理而不再转发。在HTTP/1.1和之后的版本中，若要使用该类首部，需要提供Connection首部字段。
+
+逐跳首部字段（未列出的均为端到端首部）
+
+- Connection
+- Keep-Alive
+- Proxy-Authenticate
+- Proxy-Authorization
+- Trailer
+- Transfer-Encoding
+- Upgrade
