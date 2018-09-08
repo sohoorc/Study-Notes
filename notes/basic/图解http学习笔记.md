@@ -515,20 +515,48 @@ HTTP首部字段（英语：HTTP header fields）是指在超文本传输协议�
 - 通用首部字段：请求报文和响应报文两方都会使用的首部。
 		
   - Cache-Control:控制缓存行为
-  
+
+    - 请求首部中
+
+      | 字段 | 描述 |
+      | ------  | --- |
+      | Cache-Control: max-age=\<seconds> | 设置缓存存储的最大周期，超过这个时间缓存被认为过期(单位秒)。与Expires相反，时间是相对于请求的时间。若值为0，缓存服务器通常需要将请求转发给源服务器。当存在该指令，缓存服务器将不再验证资源有效性，使用max-age代表资源保存为缓存的最长时间。 |
+      | Cache-Control: max-age=\<seconds> | 设置缓存存储的最大周期，超过这个时间缓存被认为过期(单位秒)。与Expires相反，时间是相对于请求的时间。若值为0，缓存服务器通常需要将请求转发给源服务器。当存在该指令，缓存服务器将不再验证资源有效性，使用max-age代表资源保存为缓存的最长时间。 |
+      | Cache-Control: max-stale=\<seconds>| 表明客户端愿意接收一个已经过期的资源。 可选的设置一个时间(单位秒)，表示响应不能超过的过时时间。该指令会忽略max-stale指令。若代理无法连通源服务器获取有效资源，缓存必须给客户端一条504(Gateway Timeout)状态码。 |
+      | Cache-Control: min-fresh=\<seconds> |   表示客户端希望在指定的时间内获取最新的响应。 |
+      | Cache-control: no-cache   | 在释放缓存副本之前，强制高速缓存将请求提交给原始服务器进行验证。\n从字面意思上很容易将no-cache误解成不缓存，但事实上no-cache代表不缓存过期的资源，缓存会向原服务器进行有效确认后处理资源。no-store才是真正的不进行缓存。 |
+      | Cache-control: no-store  |  缓存不应存储有关客户端请求或服务器响应的任何内容。 |
+      | Cache-control: no-transform | 不得对资源进行转换或转变。Content-Encoding, Content-Range, Content-Type等HTTP头不能由代理修改。例如，非透明代理可以对图像格式进行转换，以便节省缓存空间或者减少缓慢链路上的流量。 no-transform指令不允许这样做。 |
+
+		 
+
+    - 响应首部中
+
+      | 字段 | 描述 |
+      | --- | --- |
+      | Cache-control: must-revalidate |  缓存必须在使用之前验证旧资源的状态，并且不可使用过期资源。|
+      | Cache-control: no-cache  |  在释放缓存副本之前，强制高速缓存将请求提交给原始服务器进行验证。从字面意思上很容易将no-cache误解成不缓存，但事实上no-cache代表不缓存过期的资源，缓存会向原服务器进行有效确认后处理资源。no-store才是真正的不进行缓存。|
+      | Cache-control: no-store  |  缓存不应存储有关客户端请求或服务器响应的任何内容。|
+      | Cache-control: no-transform  | 不得对资源进行转换或转变。Content-Encoding, Content-Range, Content-Type等HTTP头不能由代理修改。例如，非透明代理可以对图像格式进行转换，以便节省缓存空间或者减少缓慢链路上的流量。 no-transform指令不允许这样做。|
+      | Cache-control: public |表明响应可以被任何对象（包括：发送请求的客户端，代理服务器，等等）缓存。|
+      | Cache-control: private | 表明响应只能被单个用户缓存，不能作为共享缓存（即代理服务器不能缓存它）,可以缓存响应内容。|
+      | Cache-control: proxy-revalidate |  与must-revalidate作用相同，但它仅适用于共享缓存（例如代理），并被私有缓存忽略。|
+      | Cache-Control: max-age=\<seconds>  |  设置缓存存储的最大周期，超过这个时间缓存被认为过期(单位秒)。与Expires相反，时间是相对于请求的时间。若值为0，缓存服务器通常需要将请求转发给源服务器。\n当存在该指令，缓存服务器将不再验证资源有效性，使用max-age代表资源保存为缓存的最长时间。|
+      | Cache-control: s-maxage=\<seconds> | 覆盖max-age 或者 Expires 头，但是仅适用于共享缓存(比如各个代理)，并且私有缓存中它被忽略。|
+
   - Connection：逐跳首部、连接的管理
   
   - Date：创建报文的时间
   
-  - Pragma：报文指令
+  - Pragma：HTTP/1.1之前版本的历史遗留字段，仅作为与HTTP/1.0的向后兼容而定义。在HTTP/1.1中 Pragma:no cache 会被cache-control:no cache替代。
   
   - Trailer：报文末端的首部一览
   
   - Transfer-Encoding：指定报文主体的传输编码方式
   
-  - Upgrade：升级为其他协议
+  - Upgrade：用于检测HTTP协议及其他协议是否可以使用更高版本进行通信，需要配合Connection:Upgrade进行使用。
   
-  - Via：代理服务器的相关信息
+  - Via：获取报文的传输路径
   
   - Warning：错误通知
 
@@ -568,7 +596,7 @@ HTTP首部字段（英语：HTTP header fields）是指在超文本传输协议�
 	
   - Referer：请求URI的原始获取方
 	
-  - TE：传世编码优先级
+  - TE：传输编码优先级
 	
   - User-Agent：HTTP客户端程序的信息
 
