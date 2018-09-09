@@ -576,11 +576,11 @@ HTTP首部字段（英语：HTTP header fields）是指在超文本传输协议�
 	
   - From：用户的电子邮箱地址
 	
-  - Host：请求资源所在的服务器
+  - Host：请求资源所在的服务器主机名。Host首部字段是在HTTP/1.1规范内唯一一个必须被包含在请求内的首部字段。
 	
-  - If-Match：比较实体标记（Etag）
+  - If-Match：比较实体标记（Etag），只有当If-Match字段和Etag字段相同时服务器才会接受请求
 	
-  - If-None-Match：比较实体标记（与If-Match相反）
+  - If-None-Match：比较实体标记Etag，不同时才会请求（与If-Match相反）
 	
   - If-Modified-Since：比较资源的更新时间
 	
@@ -588,7 +588,7 @@ HTTP首部字段（英语：HTTP header fields）是指在超文本传输协议�
 	
   - If-Range：资源未更新时发送实体Byte的范围请求
 	
-  - Max-Forwards：最大传输逐跳数
+  - Max-Forwards：最大传输逐跳数，设置可经过服务器的最大数目，服务器往下一个服务器转发请求前，会将Max-forwards的值减1后再赋值。当Max-forwards的值为0时，则不再进行转发，而是直接响应。
 	
   - Proxy-Authorization：代理服务器要求客户端的认证信息
 	
@@ -602,17 +602,21 @@ HTTP首部字段（英语：HTTP header fields）是指在超文本传输协议�
 
 - 响应首部字段：从服务器端向客户端返回响应报文时使用的首部。补充了响应附加内容，也会要求客户端附加额外的内容信息。
 
-  - Accept-Ranges：是否接受字节范围请求
+  - Accept-Ranges：用来告知客户端服务端能否处理字节范围请求，若可以则返回指定范围bytes，否则返回none。
   
-  - Age：推算资源创建经过时间
+  - Age：该首部字段能够告知客户端，源服务器在多久前创建了响应。单位：秒。
   
-  - Etage：资源的匹配信息
+  - Etage：资源的标识字段，服务器会为每份资源分配对应的Etag值。
+
+    - 强Etag：不论实体发生多么细微的变化都会改变其值。
+
+    - 若Etag值：只有资源发生了根本改变，才会改变Etag值。只用于提示资源是否相同。
   
   - Location：令客户端重新定向至指定URI
   
   - Proxy-Authenticate：代理服务器对客户端的认证信息
   
-  - Retry-After：对再次发起请求的时机要求
+  - Retry-After：告知客户端应该在多久后再次发起请求。主要配合状态码503或3XX使用。
   
   - Server：HTTP服务器的安装信息
   
@@ -624,21 +628,21 @@ HTTP首部字段（英语：HTTP header fields）是指在超文本传输协议�
   
   - Allow：资源可支持的HTTP方法
   
-  - Content-Encoding：实体主题适用的编码方式
+  - Content-Encoding：告知客户端服务器对实体主体部分选用的内容编码方式。
   
   - Content-Language：实体主体的自然语言
   
   - Content-Length：实体主体的大小（单位：字节）
   
-  - Content-Location：替代对应的资源URI
+  - Content-Location：报文主体返回资源对应的URI
   
-  - Content-MD5：实体主体的报文摘要
+  - Content-MD5：是由一串MD5算法生成的值，目的在于检查报文主体在传输过程中是否完整，以及确认传输送达。
   
-  - Content-Range：实体主体的位置范围
+  - Content-Range：告知客户端实体主体的位置范围
   
-  - Content-Type：实体主体的媒体类型
+  - Content-Type：告知客户端实体主体的媒体类型
   
-  - Expires：实体主体过期的日期时间
+  - Expires：告知客户端实体主体过期的日期时间
   
   - Last-Mondified：资源的最后修改日期时间
 
@@ -659,3 +663,16 @@ HTTP首部字段（英语：HTTP header fields）是指在超文本传输协议�
 - Trailer
 - Transfer-Encoding
 - Upgrade
+
+#### 与Cookie相关的首部字段
+- Set-Cookie  
+
+  - NAME=VALUE : 赋予Cookie的名称和其值（必须项）
+  - expires=DATE：Cookie的有效期（若不明确指定则默认为浏览器关闭前为止）
+  - path=PATH：将服务器上的文件目录作为Cookie的适用对象（若不指定则默认为文档所在的文件目录）
+  - domain=域名：作为Cookie适用对象的域名（若不指定则默认为创建Cookie的服务器的域名）
+  - Secure：仅在HTTPS安全通信时才会发送Cookie
+  - HttpOnly：加以限制，使Cookie不能被JavaScript脚本访问
+
+- Cookie  
+首部字段会告知服务器，当客户端想要获得HTTP状态管理支持时，就会在请求中包含从服务器接收到的Cookie，同样可以以多个Cookie形式发送。
