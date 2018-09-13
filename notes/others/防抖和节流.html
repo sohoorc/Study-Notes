@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>防抖和节流</title>
+</head>
+
+<body>
+  <div>
+    <span>没有防抖的input</span>
+    <input id="input1" type="text">
+  </div>
+  <div>
+    <span>防抖的input</span>
+    <input id="input2" type="text">
+  </div>
+  <div>
+    <span>节流的input</span>
+    <input id="input3" type="text">
+  </div>
+
+  <script>
+    let input1 = document.getElementById('input1');
+    let input2 = document.getElementById('input2');
+    let input3 = document.getElementById('input3');
+
+    function ajax(content) {
+      console.log("ajax content  " + content);
+    }
+
+    // 无防抖节流
+    input1.addEventListener("keyup", function (e) {
+      ajax(e.target.value);
+    })
+
+
+    // 防抖
+    function debounce(fun, delay) {
+      let timeout;
+      
+      return function (args) {
+        let that = this
+        let _args = args
+    
+        clearTimeout(timeout)
+        timeout = setTimeout(function () {
+          fun.call(that, _args)
+        }, delay)
+      }
+    }
+
+    let debounceAjax = debounce(ajax, 500)
+
+    input2.addEventListener('keyup', function (e) {
+      debounceAjax(e.target.value)
+    })
+  </script>
+
+</body>
+
+</html>
