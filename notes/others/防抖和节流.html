@@ -23,8 +23,11 @@
   </div>
 
   <script>
+    // 无防抖
     let input1 = document.getElementById('input1');
+    // 防抖
     let input2 = document.getElementById('input2');
+    // 节流
     let input3 = document.getElementById('input3');
 
     function ajax(content) {
@@ -37,14 +40,19 @@
     })
 
 
-    // 防抖
+    /*
+      防抖
+      在事件被触发n秒后再执行回调，如果在这n秒内又被触发，则重新计时。
+      适用场景 如：搜索功能 假如我们通过监听输入框输入文本来进行搜索，实际上在搜索时我们只关心输入的某个关键字，
+      而不是每输入一个英文字符就调用一次搜索接口。这时候我们就可以通过函数防抖来解决这个问题。
+    */
     function debounce(fun, delay) {
       let timeout;
-      
+
       return function (args) {
         let that = this
         let _args = args
-    
+
         clearTimeout(timeout)
         timeout = setTimeout(function () {
           fun.call(that, _args)
@@ -56,6 +64,35 @@
 
     input2.addEventListener('keyup', function (e) {
       debounceAjax(e.target.value)
+    })
+
+
+    /*
+      节流：规定在一个单位时间内，只能触发一次函数。如果这个单位时间内触发多次函数，只有一次生效。
+    */
+    function throttle(fun, delay) {
+      let last, deferTimer
+      return function (args) {
+        let that = this
+        let _args = arguments
+        let now = +new Date()
+        if (last && now < last + delay) {
+          clearTimeout(deferTimer)
+          deferTimer = setTimeout(function () {
+            last = now
+            fun.apply(that, _args)
+          }, delay)
+        } else {
+          last = now
+          fun.apply(that, _args)
+        }
+      }
+    }
+
+    let throttleAjax = throttle(ajax, 1000)
+
+    input3.addEventListener('keyup', function (e) {
+      throttleAjax(e.target.value)
     })
   </script>
 
