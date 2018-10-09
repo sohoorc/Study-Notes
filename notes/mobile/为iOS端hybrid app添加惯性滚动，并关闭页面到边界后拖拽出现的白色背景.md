@@ -1,4 +1,4 @@
-## 为iOS端hybrid app添加惯性滚动，并关闭页面到边界后拖拽出现的白色背景
+## Cordova iOS App添加惯性滚动，并关闭页面到边界后拖拽出现的白色背景
 
 ### 1. 为iOS端hybrid app添加惯性滚动
 
