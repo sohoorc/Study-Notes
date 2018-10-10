@@ -1,3 +1,7 @@
+/**
+ * build后自动打包
+ */
+
 var fs = require('fs');
 var archiver = require('archiver');
 
