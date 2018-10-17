@@ -10,8 +10,8 @@ module.exports = {
   // 模式
   mode: devMode ? 'development' : 'production',
   // 入口
-  entry: './src/index.js',
-  devtool: 'inline-source-map',
+  entry: './src/index.tsx',
+  devtool: devMode ? 'cheap-module-eval-source-map' : 'source-map',
   // 出口
   output: {
     // 所有输出文件的目标路径
@@ -20,12 +20,29 @@ module.exports = {
     // 入口的文件名模板
     filename: "[name].[chunkhash:8].js"
   },
+  resolve: {
+    // Add `.ts` and `.tsx` as a resolvable extension.
+    extensions: [".ts", ".tsx", ".js", '.jsx']
+  },
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         loader: "babel-loader"
+      },
+      {
+        test: /\.(ts|tsx)$/,
+        // include: paths.appSrc,
+        use: [
+          {
+            loader: 'ts-loader',
+            options: {
+              // disable type checker - we will use it in fork plugin
+              transpileOnly: true,
+            },
+          },
+        ],
       },
       // 针对静态文件
       {
@@ -66,7 +83,19 @@ module.exports = {
       {// 配置svg图标loader，可以在项目中通过组件的形式直接引入svg图标
         test: /\.svg$/,
         use: ['@svgr/webpack'],
-      }
+      },
+      // { // 支持typescript
+      //   test: /\.tsx?$/,
+      //   use: [
+      //     {
+      //       loader: 'ts-loader',
+      //       options: {
+      //         transpileOnly: true
+      //       }
+      //     }
+      //   ]
+      // },
+
     ]
   },
   //插进的引用, 压缩，分离美化
