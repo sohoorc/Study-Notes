@@ -11,6 +11,7 @@ module.exports = {
   mode: devMode ? 'development' : 'production',
   // 入口
   entry: './src/index.tsx',
+  // 优化代码调试
   devtool: devMode ? 'cheap-module-eval-source-map' : 'source-map',
   // 出口
   output: {
@@ -63,6 +64,7 @@ module.exports = {
               importLoaders: 1
             }
           },
+          // 适用postcss能够自动为浏览器补充css前缀
           {
             loader: require.resolve('postcss-loader'),
             options: {
@@ -108,7 +110,11 @@ module.exports = {
     // HOST
     host: '127.0.0.1',
     // 端口
-    port: 23333
+    port: 23333,
+    // 开启热更新
+    hot: true,
+    // 报错提示在网页遮罩层
+    overlay: true,
   }
   // optimization: {
   //   splitChunks: {
