@@ -84,18 +84,6 @@ module.exports = {
         test: /\.svg$/,
         use: ['@svgr/webpack'],
       },
-      // { // 支持typescript
-      //   test: /\.tsx?$/,
-      //   use: [
-      //     {
-      //       loader: 'ts-loader',
-      //       options: {
-      //         transpileOnly: true
-      //       }
-      //     }
-      //   ]
-      // },
-
     ]
   },
   //插进的引用, 压缩，分离美化
