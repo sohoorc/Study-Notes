@@ -116,6 +116,7 @@ module.exports = {
     // 报错提示在网页遮罩层
     overlay: true,
   }
+  // 代码压缩，开发模式不需要
   // optimization: {
   //   splitChunks: {
   //     chunks: 'all',
