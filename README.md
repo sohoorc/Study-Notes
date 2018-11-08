@@ -40,6 +40,21 @@
 
   ```
 
+- react-native android沉浸式状态栏设置
+
+    打开android->app->src->main->res->values->styles，在style标签内添加如下代码：
+    ```
+        <item name="android:windowTranslucentStatus">true</item>
+    ```
+
+    打开AndroidMainfest.xml 使用AppTheme(若已存在则可以不添加):
+    ```
+        <application
+            android:theme="@style/AppTheme">
+        >
+        </application>
+    ```
+
 - [Cordova iOS App添加惯性滚动，并关闭页面到边界后拖拽出现的白色背景](https://github.com/sohoorc/Study-Notes/blob/master/notes/mobile/%E4%B8%BAiOS%E7%AB%AFhybrid%20app%E6%B7%BB%E5%8A%A0%E6%83%AF%E6%80%A7%E6%BB%9A%E5%8A%A8%EF%BC%8C%E5%B9%B6%E5%85%B3%E9%97%AD%E9%A1%B5%E9%9D%A2%E5%88%B0%E8%BE%B9%E7%95%8C%E5%90%8E%E6%8B%96%E6%8B%BD%E5%87%BA%E7%8E%B0%E7%9A%84%E7%99%BD%E8%89%B2%E8%83%8C%E6%99%AF.md)
 
 - [解决cordova项目中android端键盘弹出后样式混乱](https://github.com/sohoorc/Study-Notes/blob/master/notes/mobile/%E8%A7%A3%E5%86%B3cordova%20android%E7%AB%AF%E9%94%AE%E7%9B%98%E5%BC%B9%E5%87%BA%E6%97%B6%E6%A0%B7%E5%BC%8F%E6%B7%B7%E4%B9%B1.md)
