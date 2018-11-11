@@ -9,7 +9,8 @@
 ---
 
 ## 前端相关
-- [基于webpack4的react开发环境配置](https://github.com/sohoorc/Study-Notes/blob/master/notes/others/webpack_config/webpack.config.dev.js)
+
+- [基于webpack4的react开发环境配置](https://github.com/sohoorc/Study-Notes/blob/master/notes/others/webpack_config)
 
 ## 优化
 
