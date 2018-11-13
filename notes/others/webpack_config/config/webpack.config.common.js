@@ -3,8 +3,6 @@ const webpack = require('webpack');
 // 打包HTML文件
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-console.log(path.resolve(__dirname, 'build'))
-
 module.exports = {
     // 入口
     entry: './src/index.tsx',
