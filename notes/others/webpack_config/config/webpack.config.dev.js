@@ -1,5 +1,7 @@
 const merge = require('webpack-merge');
 const common = require('./webpack.config.common.js');
+// 项目优化插件 作用：各依赖大小展示，方便优化打包代码大小
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = merge(common, {
     mode: 'development',
@@ -77,7 +79,7 @@ module.exports = merge(common, {
             },
         ]
     },
-    // 不适用代码优化
+    // 开发模式中不适用代码优化
     optimization: {
         removeAvailableModules: false,
         removeEmptyChunks: false,
@@ -109,5 +111,8 @@ module.exports = merge(common, {
 
         // 显示运行进度
         progress: true,
-    }
+    },
+    plugins:[
+        new BundleAnalyzerPlugin()
+    ]
 });

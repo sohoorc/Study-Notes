@@ -1,9 +1,4 @@
-const path = require('path');
-const webpack = require('webpack');
-// 打包HTML文件
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-
-console.log(path.resolve(__dirname, 'build'))
+// 打包HTML文件const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     // 入口
