@@ -1,4 +1,5 @@
-// 打包HTML文件const HtmlWebpackPlugin = require('html-webpack-plugin');
+// 打包HTML文件
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     // 入口

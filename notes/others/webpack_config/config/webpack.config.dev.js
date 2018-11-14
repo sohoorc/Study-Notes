@@ -47,7 +47,7 @@ module.exports = merge(common, {
             {
                 test: /\.css$/,
                 use: [
-                    // 当开发模式时，使用style-loader直接引入css样式，不进行压缩。
+                    // 开发模式时，使用style-loader直接引入css样式，不进行压缩。
                     'style-loader',
                     {
                         loader: 'css-loader',
