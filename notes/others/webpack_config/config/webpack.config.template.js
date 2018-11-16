@@ -7,6 +7,8 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 // 判断是否属于开发模式
 const devMode = process.env.NODE_ENV !== 'production'
 
+console.log(path.resolve(__dirname, 'build'))
+
 module.exports = {
     // 模式 webpack4新增选项 生产模式下默认对代码进行了压缩，开发模式下优化了打包速度
     mode: devMode ? 'development' : 'production',

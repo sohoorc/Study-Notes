@@ -1,7 +1,10 @@
 const merge = require('webpack-merge');
 const common = require('./webpack.config.common.js');
+const path = require('path');
 // 项目优化插件 作用：各依赖大小展示，方便优化打包代码大小
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
+const appSrc = path.resolve(__dirname, '../src')
 
 module.exports = merge(common, {
     mode: 'development',
@@ -20,12 +23,13 @@ module.exports = merge(common, {
         rules: [
             {
                 test: /\.(js|jsx)$/,
-                exclude: /node_modules/,
+                // exclude: /node_modules/,
+                include: appSrc,
                 loader: "babel-loader"
             },
             {
                 test: /\.(ts|tsx)$/,
-                // include: paths.appSrc,
+                include: appSrc,
                 use: [
                     {
                         loader: 'ts-loader',
@@ -46,8 +50,8 @@ module.exports = merge(common, {
             },
             {
                 test: /\.css$/,
+                include: appSrc,
                 use: [
-                    // 开发模式时，使用style-loader直接引入css样式，不进行压缩。
                     'style-loader',
                     {
                         loader: 'css-loader',
@@ -55,7 +59,7 @@ module.exports = merge(common, {
                             importLoaders: 1
                         }
                     },
-                    // 适用postcss能够自动为浏览器补充css前缀
+                    // 使用postcss能够自动为浏览器补充css前缀
                     {
                         loader: require.resolve('postcss-loader'),
                         options: {
@@ -112,7 +116,7 @@ module.exports = merge(common, {
         // 显示运行进度
         progress: true,
     },
-    plugins:[
+    plugins: [
         new BundleAnalyzerPlugin()
     ]
 });
