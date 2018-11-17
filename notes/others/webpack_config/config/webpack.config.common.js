@@ -1,5 +1,7 @@
 // 打包HTML文件
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
+const appSrc = path.resolve(__dirname, '../src')
 
 module.exports = {
     // 入口
@@ -7,6 +9,18 @@ module.exports = {
     resolve: {
         // Add `.ts` and `.tsx` as a resolvable extension.
         extensions: [".ts", ".tsx", ".js", '.jsx']
+    },
+    module: {
+        rules: [
+            {// 配置svg图标loader，可以在项目中通过组件的形式直接引入svg图标
+                test: /\.svg$/,
+                include: appSrc,
+                use: [
+                    '@svgr/webpack',
+                    'url-loader'
+                ]
+            }
+        ]
     },
     // 性能提示
     performance: {
@@ -18,8 +32,6 @@ module.exports = {
         new HtmlWebpackPlugin({
             file: 'index.html',
             template: 'public/index.html'
-        }),
-    ],
-
-
+        })
+    ]
 }

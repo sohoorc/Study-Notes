@@ -80,10 +80,13 @@ module.exports = merge(common, {
                     },
                 ]
             },
-            {// 配置svg图标loader，可以在项目中通过组件的形式直接引入svg图标
-                test: /\.svg$/,
-                use: ['@svgr/webpack']
-            }
+            // {// 配置svg图标loader，可以在项目中通过组件的形式直接引入svg图标
+            //     test: /\.svg$/,
+            //     use: [
+            //         '@svgr/webpack',
+            //         'url-loader'
+            //     ]
+            // }
         ]
     },
     // 代码优化

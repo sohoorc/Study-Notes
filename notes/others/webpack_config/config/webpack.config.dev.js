@@ -36,6 +36,7 @@ module.exports = merge(common, {
                         options: {
                             // disable type checker - we will use it in fork plugin
                             transpileOnly: true,
+                            experimentalWatchApi:true
                         },
                     },
                 ],
@@ -45,7 +46,8 @@ module.exports = merge(common, {
                 test: /\.(png|jpg|gif)$/,
                 loader: "url-loader",
                 options: {
-                    limit: 10000
+                    limit: 8192,
+                    name: 'static/[name].[hash:8].[ext]',
                 }
             },
             {
@@ -76,11 +78,7 @@ module.exports = merge(common, {
                         },
                     },
                 ]
-            },
-            {// 配置svg图标loader，可以在项目中通过组件的形式直接引入svg图标
-                test: /\.svg$/,
-                use: ['@svgr/webpack'],
-            },
+            }
         ]
     },
     // 开发模式中不适用代码优化
