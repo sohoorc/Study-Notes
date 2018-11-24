@@ -106,8 +106,8 @@ module.exports = merge(common, {
                     chunks: "initial", // 必须三选一： "initial" | "all" | "async"(默认就是async) 
                     test: /lodash/, // 正则规则验证，如果符合就提取 chunk
                     name: "lodash", // 要缓存的 分隔出来的 chunk 名称 
-                    minSize: 30000,
-                    minChunks: 1,
+                    minSize: 30000, // 形成一个新代码块最小的体积
+                    minChunks: 1,   // 在分割之前，这个代码块最小应该被引用的次数，默认配置的策略是不需要多次引用也可以被分割
                     enforce: true,
                     maxAsyncRequests: 5, // 最大异步请求数， 默认1
                     maxInitialRequests: 3, // 最大初始化请求书，默认1
@@ -118,7 +118,7 @@ module.exports = merge(common, {
                     test: /\.css$/,
                     chunks: 'all',
                     enforce: true
-                  }
+                }
             }
         }
     },

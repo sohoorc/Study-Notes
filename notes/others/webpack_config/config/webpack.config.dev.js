@@ -11,11 +11,11 @@ module.exports = merge(common, {
     devtool: 'cheap-module-eval-source-map',
     // 出口
     output: {
-        pathinfo: false,
+        pathinfo: true,
         // 所有输出文件的目标路径
         // 必须是绝对路径（使用 Node.js 的 path 模块）
         // path: path.resolve(__dirname, './../build'),
-        // 入口的文件名模板
+        // 输出的文件名配置
         chunkFilename: '[name].chunk.js',
         filename: "bundle.js"
     },

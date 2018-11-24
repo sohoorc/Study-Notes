@@ -24,7 +24,7 @@
 
 ---
 
-## mobile
+## Mobile
 
 - 允许IOS访问HTTP请求：  
 
@@ -35,7 +35,8 @@
 - [在react-native项目中使用svg图标](https://github.com/sohoorc/Study-Notes/blob/master/notes/mobile/%E5%9C%A8react-native%E9%A1%B9%E7%9B%AE%E4%B8%AD%E4%BD%BF%E7%94%A8svg%E5%9B%BE%E6%A0%87.md)
 
 - 取消webapp中长按屏幕所触发的系统事件
-  ```
+
+  ``` 
   -webkit-user-select: none;/*禁用手机浏览器的用户选择功能 */
   -moz-user-select: none;
 
