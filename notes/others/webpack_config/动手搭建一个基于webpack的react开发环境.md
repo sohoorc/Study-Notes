@@ -31,9 +31,17 @@ module.exports = {
 
 接下来，我们就来一步步的完成这些配置。
 
-要注意的是，本文不会赘述现代前端开发中的一些基础知识，如 npm、模块化等基础知识。所以，若是对webpack已经了如指掌，那么大可不必看这篇文章。不过若能提出改进建议，我也非常感激。若你并没有听说过webpack，或不知道它是什么，那么建议你还是先了解一下基础知识。
+要注意的是，本文不会赘述现代前端开发中的一些基础知识，如 npm依赖管理、模块化等基础知识。所以，若你并没有听说过webpack，或不知道它是什么，那么建议你还是先了解一下基础知识。若对webpack已经了如指掌，那么也大可不必看这篇文章。不过大佬若是愿意指导一番，我也是非常开心的！！^_^
 
-### 安装
+### 初始化和安装
+
+在指定文件夹下执行 `npm init` 进行初始化。
+
+`mkdir webpackDemo&&npm init`
+
+由于我们的项目不是一个要发布的项目，所以执行npm init后只用一路回车即可。
+
+#### 安装webpack
 
 通过npm安装:
 
@@ -97,6 +105,175 @@ output: {
 这里的filename我们并没有给它一个实际的名称，而是使用模板字符串去设置webpack生成后的文件名称。这个设置中的[name]代表模块名称，在单入口文件中默认为main。而[hash]则会生成一个模块标识符的hash,默认是20位，我们可以通过[hash:16]的方式指定它的位数。打包后的文件名称就像这样`main.f236aaeca342dfb1f8dd.js`。在生成文件名称后跟上hash有助于我们在项目重新部署后，由于引用的文件名称变了，浏览器将会立马去下载新的文件，不会继续使用本地的缓存。
 
 ### loader  
+
+webpack的作用就是将前端开发中的各个模块进行处理以及打包。而loader的作用就是处理webpack中的这些模块。
+
+webpack中模块有很多种，常见的有：
+
+- 模块化的js文件
+
+- css/less/sass文件
+
+- 图片以及静态文件
+
+loader在module中配置：
+
+```
+// 示例
+
+module.exports =  {
+    mode: 'development',
+    // 入口
+    entry: './src/index.js',
+    // 出口
+    output: {
+        pathinfo: true,
+        // 所有输出文件的目标路径
+        // 必须是绝对路径（使用 Node.js 的 path 模块）
+        // path: path.resolve(__dirname, './../build'),
+        // 输出的文件名配置
+        chunkFilename: '[name].chunk.js',
+        filename: "bundle.js"
+    },
+    module: {
+        rules: [
+            // 在这列配置loader
+        ]
+    }
+};
+
+```
+
+我们要对这些模块进行处理，就要使用到不同的loader。在此之前，我们先简单的介绍一下我们需要使用到的loader。
+
+#### babel-loader
+
+babel是一个语法转换器，能够让你自由的使用JavaScript的最新语法。它能够将我们所写的新语法、jsx等转换成浏览器能够友好支持的形式。
+
+要使用babel-loader我们需要下列依赖,我们可以通过执行`npm install --save-dev babel-loader @babel/core @babel/preset-react @babel/preset-env`安装它们。
+
+- babel-loader
+
+- @babel/core
+
+    babel的核心组件,里面包含着babel的api。
+
+- @babel/preset-env
+
+    用来转义JavaScript语法。
+
+- @babel/preset-react
+
+    用来转义react。
+
+配置babel-loader：
+
+```
+module.exports =  {
+    mode: 'development',
+    // 入口
+    entry: './src/index.js',
+    // 出口
+    output: {
+        pathinfo: true,
+        // 所有输出文件的目标路径
+        // 必须是绝对路径（使用 Node.js 的 path 模块）
+        // path: path.resolve(__dirname, './../build'),
+        // 输出的文件名配置
+        chunkFilename: '[name].chunk.js',
+        filename: "bundle.js"
+    },
+    module: {
+        rules: [
+            {
+                test: /\.(js|jsx)$/,
+                exclude: /node_modules/,
+                include: appSrc,
+                loader: "babel-loader"
+            }
+        ]
+    }
+};
+```
+
+完成上述配置后，别忘了还有一部。在<b>项目根目录</b>创建babel的配置文件    `.babelrc`。
+
+后面的后缀rc来自linux中，使用过linux就知道linux中很多rc结尾的文件，比如.bashrc，rc是run command的缩写，翻译成中文就是运行时的命令，表示程序执行时就会来调用这个文件。
+
+babel所有的操作基本都会来读取这个配置文件，除了一些在回调函数中设置options参数的，如果没有这个配置文件，会从package.json文件的babel属性中读取配置。
+
+在`.babelrc`中添加下列语句：
+
+```
+{
+    "presets": ["@babel/preset-env","@babel/preset-react"]
+}
+```
+
+目的是为了告诉babel，转义es2015和react的语法。
+
+#### url-loader
+
+#### style-loader
+
+#### css-loader
+
+完成一个简单的模块处理配置:
+
+```
+
+  module: {
+        rules: [
+            {
+                test: /\.(js|jsx)$/,
+                exclude: /node_modules/,
+                loader: "babel-loader"
+            },
+            // 针对静态文件
+            {
+                test: /\.(png|jpg|gif)$/,
+                loader: "url-loader",
+                options: {
+                    limit: 10000
+                }
+            },
+            {
+                test: /\.css$/,
+                use: [
+                    // 当开发模式时，使用style-loader直接引入css样式，不进行压缩。
+                    devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            importLoaders: 1
+                        }
+                    },
+                    // 适用postcss能够自动为浏览器补充css前缀
+                    {
+                        loader: require.resolve('postcss-loader'),
+                        options: {
+                            ident: 'postcss',
+                            plugins: () => [
+                                require('postcss-flexbugs-fixes'),
+                                require('postcss-preset-env')({
+                                    autoprefixer: {
+                                        flexbox: 'no-2009',
+                                    },
+                                    stage: 3,
+                                }),
+                            ],
+                        },
+                    },
+                ]
+            },
+            {// 配置svg图标loader，可以在项目中通过组件的形式直接引入svg图标
+                test: /\.svg$/,
+                use: ['@svgr/webpack'],
+            },
+        ]
+    }
+
+```
 
 ### 插件
 
