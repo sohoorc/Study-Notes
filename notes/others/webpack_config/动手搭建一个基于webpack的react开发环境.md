@@ -83,8 +83,6 @@ module.export = {
 entry:'./src/index.js'
 ```
 
-这样，我们就将src目录下的index.js文件作为程序的入口。
-
 ### 输出 (output)
 
 output用来配置项目打包后的文件名称、路径。用来告诉webpack怎么输出、输出到哪、叫什么名字。
@@ -196,13 +194,13 @@ module.exports =  {
 };
 ```
 
-完成上述配置后，别忘了还有一部。在<b>项目根目录</b>创建babel的配置文件    `.babelrc`。
+完成上述配置后，我们还需要在<b>项目根目录</b>创建babel的配置文件`.babelrc`。
 
 后面的后缀rc来自linux中，使用过linux就知道linux中很多rc结尾的文件，比如.bashrc，rc是run command的缩写，翻译成中文就是运行时的命令，表示程序执行时就会来调用这个文件。
 
 babel所有的操作基本都会来读取这个配置文件，除了一些在回调函数中设置options参数的，如果没有这个配置文件，会从package.json文件的babel属性中读取配置。
 
-在`.babelrc`中添加下列语句：
+在`.babelrc`中添加下列语句，目的是为了告诉babel，转义es2015和react的语法。
 
 ```
 {
@@ -210,9 +208,9 @@ babel所有的操作基本都会来读取这个配置文件，除了一些在回
 }
 ```
 
-目的是为了告诉babel，转义es2015和react的语法。
-
 #### url-loader
+
+url-loader的作用是使webpack能够打包静态文件。
 
 #### style-loader
 
