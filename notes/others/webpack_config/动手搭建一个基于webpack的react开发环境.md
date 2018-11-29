@@ -191,7 +191,7 @@ module.exports =  {
             }
         ]
     }
-};
+}
 ```
 
 完成上述配置后，我们还需要在<b>项目根目录</b>创建babel的配置文件`.babelrc`。
@@ -210,68 +210,50 @@ babel所有的操作基本都会来读取这个配置文件，除了一些在回
 
 #### url-loader
 
-url-loader的作用是使webpack能够打包静态文件。
+url-loader和file-loader的作用类似，都是使webpack能够打包静态文件。url-loader相较于file-loader的功能更强大，它能够使用两种方式进行打包。
 
-#### style-loader
+url-loader有一个重要的参数 `limit` ,这个参数用来设置打包文件大小的限制。当文件小于指定参数时，它能够返回一个DataURL（base64）形势的文件。当文件大于指定参数时，它将通过file-loader进行打包。
 
-#### css-loader
-
-完成一个简单的模块处理配置:
+配置url-loader：
 
 ```
-
-  module: {
+module.exports =  {
+    mode: 'development',
+    // 入口
+    entry: './src/index.js',
+    // 出口
+    output: {
+        pathinfo: true,
+        // 所有输出文件的目标路径
+        // 必须是绝对路径（使用 Node.js 的 path 模块）
+        // path: path.resolve(__dirname, './../build'),
+        // 输出的文件名配置
+        chunkFilename: '[name].chunk.js',
+        filename: "bundle.js"
+    },
+    module: {
         rules: [
             {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
+                include: appSrc,
                 loader: "babel-loader"
             },
-            // 针对静态文件
             {
                 test: /\.(png|jpg|gif)$/,
                 loader: "url-loader",
                 options: {
                     limit: 10000
                 }
-            },
-            {
-                test: /\.css$/,
-                use: [
-                    // 当开发模式时，使用style-loader直接引入css样式，不进行压缩。
-                    devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            importLoaders: 1
-                        }
-                    },
-                    // 适用postcss能够自动为浏览器补充css前缀
-                    {
-                        loader: require.resolve('postcss-loader'),
-                        options: {
-                            ident: 'postcss',
-                            plugins: () => [
-                                require('postcss-flexbugs-fixes'),
-                                require('postcss-preset-env')({
-                                    autoprefixer: {
-                                        flexbox: 'no-2009',
-                                    },
-                                    stage: 3,
-                                }),
-                            ],
-                        },
-                    },
-                ]
-            },
-            {// 配置svg图标loader，可以在项目中通过组件的形式直接引入svg图标
-                test: /\.svg$/,
-                use: ['@svgr/webpack'],
-            },
+            }
         ]
     }
-
+}
 ```
+
+#### style-loader
+
+#### css-loader
 
 ### 插件
 
