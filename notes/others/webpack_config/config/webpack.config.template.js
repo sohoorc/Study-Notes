@@ -26,7 +26,6 @@ module.exports = {
         filename: "[name].[chunkhash:8].js"
     },
     resolve: {
-        // Add `.ts` and `.tsx` as a resolvable extension.
         extensions: [".ts", ".tsx", ".js", '.jsx']
     },
     // 性能提示
@@ -38,7 +37,10 @@ module.exports = {
             {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
-                loader: "babel-loader"
+                loader: "babel-loader",
+                options: {
+                    presets: ["@babel/preset-env", "@babel/preset-react"]
+                }
             },
             {
                 test: /\.(ts|tsx)$/,

@@ -133,9 +133,15 @@ module.exports =  {
         chunkFilename: '[name].chunk.js',
         filename: "bundle.js"
     },
+
     module: {
         rules: [
-            // 在这列配置loader
+            {
+                test: /\.(js|jsx)$/,     // 用来指定针对的文件类型 支持正则
+                exclude: /node_modules/, // 用来指定需要排除的文件夹，优化打包速度
+                include: 'src',         // 指定所包含的文件夹 ，优化打包速度
+                loader: "babel-loader", // 针对指定文件使用的loader
+            }
         ]
     }
 };
@@ -186,21 +192,25 @@ module.exports =  {
             {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
-                include: appSrc,
-                loader: "babel-loader"
+                include: 'src',
+                loader: "babel-loader",
+                options: {
+                    // 指定babel预处理转义
+                    presets: ["@babel/preset-env", "@babel/preset-react"]
+                }
             }
         ]
     }
 }
 ```
 
-完成上述配置后，我们还需要在<b>项目根目录</b>创建babel的配置文件`.babelrc`。
+完成上述配置后，我们还需配置一下babel，让他能够转换react和js的新语法。可以像上面使用webpack配置中的option选项中的presets字段指定babel预处理的方式。
 
-后面的后缀rc来自linux中，使用过linux就知道linux中很多rc结尾的文件，比如.bashrc，rc是run command的缩写，翻译成中文就是运行时的命令，表示程序执行时就会来调用这个文件。
+也可以在项目的根目录创建babel的配置文件`.babelrc`。`.babelrc`后缀rc来自linux中，使用过linux就知道linux中很多rc结尾的文件，比如.bashrc，rc是run command的缩写，翻译成中文就是运行时的命令，表示程序执行时就会来调用这个文件。
 
 babel所有的操作基本都会来读取这个配置文件，除了一些在回调函数中设置options参数的，如果没有这个配置文件，会从package.json文件的babel属性中读取配置。
 
-在`.babelrc`中添加下列语句，目的是为了告诉babel，转义es2015和react的语法。
+在`.babelrc`中添加下列语句：
 
 ```
 {
@@ -236,13 +246,18 @@ module.exports =  {
             {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
-                include: appSrc,
-                loader: "babel-loader"
+                include: src,
+                loader: "babel-loader"，
+                options: {
+                    // 指定babel预处理转义
+                    presets: ["@babel/preset-env", "@babel/preset-react"]
+                }
             },
             {
                 test: /\.(png|jpg|gif)$/,
                 loader: "url-loader",
                 options: {
+                    // 设置url-loader转DataURL的文件大小上限
                     limit: 10000
                 }
             }
@@ -250,6 +265,7 @@ module.exports =  {
     }
 }
 ```
+
 
 #### style-loader
 

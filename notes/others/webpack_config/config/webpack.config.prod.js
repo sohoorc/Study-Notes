@@ -17,7 +17,6 @@ module.exports = merge(common, {
         chunkFilename: 'js/[name].chunk.js',
         // 所有输出文件的目标路径
         // 必须是绝对路径（使用 Node.js 的 path 模块）
-        // path: path.resolve(__dirname, './../build'),
         path: path.resolve(__dirname, './../build'),
         filename: "js/[name].[chunkhash:8].js"
     },
@@ -27,7 +26,10 @@ module.exports = merge(common, {
                 test: /\.(js|jsx)$/,
                 include: appSrc,
                 // exclude: /node_modules/,
-                loader: "babel-loader"
+                loader: "babel-loader",
+                options: {
+                    presets: ["@babel/preset-env", "@babel/preset-react"]
+                }
             },
             {
                 test: /\.(ts|tsx)$/,
@@ -79,14 +81,7 @@ module.exports = merge(common, {
                         },
                     },
                 ]
-            },
-            // {// 配置svg图标loader，可以在项目中通过组件的形式直接引入svg图标
-            //     test: /\.svg$/,
-            //     use: [
-            //         '@svgr/webpack',
-            //         'url-loader'
-            //     ]
-            // }
+            }
         ]
     },
     // 代码优化

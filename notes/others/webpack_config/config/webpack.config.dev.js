@@ -14,7 +14,6 @@ module.exports = merge(common, {
         pathinfo: true,
         // 所有输出文件的目标路径
         // 必须是绝对路径（使用 Node.js 的 path 模块）
-        // path: path.resolve(__dirname, './../build'),
         // 输出的文件名配置
         chunkFilename: '[name].chunk.js',
         filename: "bundle.js"
@@ -25,7 +24,10 @@ module.exports = merge(common, {
                 test: /\.(js|jsx)$/,
                 // exclude: /node_modules/,
                 include: appSrc,
-                loader: "babel-loader"
+                loader: "babel-loader",
+                options: {
+                    presets: ["@babel/preset-env", "@babel/preset-react"]
+                }
             },
             {
                 test: /\.(ts|tsx)$/,
