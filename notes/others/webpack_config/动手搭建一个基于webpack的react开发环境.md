@@ -534,12 +534,123 @@ module.exports =  {
 
 1. 修改配置文件中的mode选项，将development修改为production。
 
-2. 删除配置中的mode选项，修改package.json scripts中的执行脚本为 `webpack --mode production --config ./config/webpack.config.js`。
+2. 删除配置中的mode选项，修改package.json scripts中的build项为 `webpack --mode production --config ./config/webpack.config.js`。
 
-在配置2中，使用--mode 能够为webpack-cli制定打包模式。
-
-修改后再次打包，这时候代码就是经过压缩后的了。
+在配置2中，使用--mode 能够为webpack-cli设置打包模式。修改后再次打包，这时候代码经过webpack production模式的优化，进行了混淆压缩，变成了发布版本。
 
 ### devServer
+
+在日常的开发过程中，我们肯定不能每修改一点东西就重新build一次，这样开发效率会受到很大的影响。这时需要启动一个服务，来监听文件的变动。当文件保存时就重新打包，同时帮我们自动刷新浏览器，方便我们及时观察到更新。
+
+要完成上述操作有几种方式，我们这里只介绍其中的一种，使用 `webpack-dev-server` 插件。
+
+执行 `npm install --save-dev webpack-dev-server` 安装插件，在module.explot中添加配置项 `devServer`。
+
+devServer的配置项有很多，我们大概的介绍其中几种常用的配置：
+
+- contentBase: '',告诉服务器从哪个目录中提供内容
+
+- https: true|false, 是否启用https
+
+- compress: true|false, 是否启用压缩
+
+- host: '127.0.0.1',  指定host地址
+
+- port: 23333, 指定端口
+
+- overlay: true|false, 当出现编译器错误或警告时，在浏览器中显示全屏覆盖层。
+
+- progress: true|false, 将运行进度输出到控制台。
+
+将devServer添加到配置中：
+
+```
+const path = require('path');
+
+const appSrc = path.resolve(__dirname, '../src')
+// 引入html-webpack-plugin插件
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+module.exports =  {
+    // 入口
+    entry: './src/index.js',
+    // 出口
+    output: {
+        pathinfo: true,
+        // 所有输出文件的目标路径
+        // 必须是绝对路径（使用 Node.js 的 path 模块）
+        path: path.resolve(__dirname, './../build'),
+        // 输出的文件名配置
+        filename: "bundle.js"
+    },
+    module: {
+        rules: [
+            {
+                test: /\.(js|jsx)$/,
+                exclude: /node_modules/,
+                include: appSrc,
+                loader: "babel-loader",
+                options: {
+                    // 指定babel预处理转义
+                    presets: ["@babel/preset-env", "@babel/preset-react"]
+                }
+            },
+            {
+                test: /\.(png|jpg|gif)$/,
+                loader: "url-loader",
+                options: {
+                    // 设置url-loader转DataURL的文件大小上限
+                    limit: 10000
+                }
+            },
+            // 针对css文件配置style-loader和css-loader
+            {
+                test: /\.css$/,
+                include: appSrc,
+                use: [
+                        'style-loader',
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            // 可以包含一些配置
+
+                            minimize: true // 开发模式下应该设为false，优化打包速度
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    devServer: {
+        // HOST
+        host: '127.0.0.1',
+        // 端口
+        port: 23333,
+        // 报错提示在网页遮罩层
+        overlay: true,
+        // 显示运行进度
+        progress: true,
+    },
+    plugins: [
+        // HTML模板文件处理插件
+        new HtmlWebpackPlugin({
+            file: 'index.html', // 生成的文件名称
+            template: 'public/index.html' // 指定模板文件
+        })
+    ]
+}
+```
+
+需要注意的时，devServer应当用在开发环境中，所以我们需要将之前的配置进行修改。
+
+1. 在配置中删除mode项。
+
+2. 为package.json的scripts中添加另一个启动命令 `"start": "webpack-dev-server --open --mode development --config ./config/webpack.config.js"`
+
+3. 将之前的build项改为 `webpack --mode production --config ./config/webpack.config.js`。
+
+现在，当我们执行npm build时，webpack将使用production模式进行打包。执行npm start时，将使用development模式进行打包，并且webpack-dev-server将为我们启动一个服务，监听文件变更。
+
+现在执行npm start，就可以开发 react 项目了！
 
 ### 进阶
