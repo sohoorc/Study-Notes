@@ -33,7 +33,9 @@ module.exports = {
 
 要注意的是，本文不会赘述现代前端开发中的一些基础知识，如 npm依赖管理、模块化等基础知识。所以，若你并没有听说过webpack，或不知道它是什么，那么建议你还是先了解一下基础知识。若对webpack已经了如指掌，那么也大可不必看这篇文章。不过大佬若是愿意指导一番，我也是非常开心的！！^_^
 
-### 初始化和安装
+### 准备
+
+#### 初始化和安装
 
 在指定文件夹下执行 `npm init` 进行初始化。
 
@@ -41,17 +43,82 @@ module.exports = {
 
 因为项目并不是一个要发布到npm的项目，所以执行npm init后只用一路回车即可。
 
-#### 安装webpack
+安装webpack和react的依赖:
 
-通过npm安装:
-
-`npm install --save-dev webpack`
-
-通过yarn安装:
-
-`yarn add webpack --dev`
+`npm install --save-dev webpack react react-dom`
 
 <b>在webpack4之后的版本中，还需要安装webpack-cli，具体方法同上。</b>
+
+#### 创建初始目录结构和文件
+
+在项目根目录创建config文件夹，并在内创建webpack.config.js。
+
+打开根目录下的package.json 配置`scripts`:
+
+```
+"scripts": {
+    "build": "webpack --mode production --config ./config/webpack.config.js",
+  }
+```
+
+配置scripts脚本是为了后期在执行过程中只用在命令行中输入 npm '脚本中指定配置' 就能够完成命令行的输入操作。比如我们输入 npm build，就会自动执行 "webpack --mode production --config ./config/webpack.config.js" 这一长串的操作。
+
+创建代码文件夹和react的入口文件：
+
+在项目根目录中创建src文件夹，并在内创建index.js、App.js、index.css。
+
+index.js
+
+```
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+import './index.css'
+
+
+ReactDOM.render(
+  <App />,
+  document.getElementById('root')
+);
+```
+
+App.js
+
+```
+import React from 'react';
+
+export default class App extends React.Component {
+    render() {
+        return <div>
+            <p className="text">动手搭建一个基于webpack4的react开发环境</p>
+        </div>
+    }
+}
+```
+
+index.css
+
+```
+.text{
+    color:'red'
+}
+```
+
+完成上述操作后，项目目录结构应该像下面这样
+
+```
+webpackDemo
+│   node_modules
+└───config
+    │   webpack.config.js
+└───src
+    │   index.js
+    │   index.css
+    │   App.js
+    package.json
+```
+
+现在，我们完成了简单的初始化工作，下面开始了解webpack吧。
 
 ### 模式 (mode)
 
@@ -80,7 +147,12 @@ module.export = {
 一个简单的单页应用入口如下：
 
 ```
-entry:'./src/index.js'
+
+module.export = {
+  mode:'production' // 'development'||'production'||'none',
+  entry:'./src/index.js',
+}
+
 ```
 
 ### 输出 (output)
@@ -88,8 +160,12 @@ entry:'./src/index.js'
 output用来配置项目打包后的文件名称、路径。用来告诉webpack怎么输出、输出到哪、叫什么名字。
 
 ```
+const path = require('path');
 
-output: {
+module.export = {
+  mode:'production' // 'development'||'production'||'none',
+  entry:'./src/index.js',
+  output: {
     // 在bundle中引入注释 注意：该选项不应该在生产模式中启用
     pathinfo:true,
     // 所有输出文件的目标路径
@@ -97,6 +173,7 @@ output: {
     path: path.resolve(__dirname, './../build'),
     // 输出的文件名配置
     filename: "[name].[hash].js"
+    }
 }
 ```
 
@@ -118,6 +195,9 @@ loader在module中配置：
 
 ```
 // 示例
+const path = require('path');
+
+const appSrc = path.resolve(__dirname, '../src')
 
 module.exports =  {
     mode: 'development',
@@ -128,9 +208,8 @@ module.exports =  {
         pathinfo: true,
         // 所有输出文件的目标路径
         // 必须是绝对路径（使用 Node.js 的 path 模块）
-        // path: path.resolve(__dirname, './../build'),
+        path: path.resolve(__dirname, './../build'),
         // 输出的文件名配置
-        chunkFilename: '[name].chunk.js',
         filename: "bundle.js"
     },
 
@@ -139,7 +218,7 @@ module.exports =  {
             {
                 test: /\.(js|jsx)$/,     // 用来指定针对的文件类型 支持正则
                 exclude: /node_modules/, // 用来指定需要排除的文件夹，优化打包速度
-                include: 'src',         // 指定所包含的文件夹 ，优化打包速度
+                include: appSrc,         // 指定所包含的文件夹 ，优化打包速度
                 loader: "babel-loader", // 针对指定文件使用的loader
             }
         ]
@@ -173,6 +252,10 @@ babel是一个语法转换器，能够让你自由的使用JavaScript的最新�
 配置babel-loader：
 
 ```
+const path = require('path');
+
+const appSrc = path.resolve(__dirname, '../src')
+
 module.exports =  {
     mode: 'development',
     // 入口
@@ -182,9 +265,8 @@ module.exports =  {
         pathinfo: true,
         // 所有输出文件的目标路径
         // 必须是绝对路径（使用 Node.js 的 path 模块）
-        // path: path.resolve(__dirname, './../build'),
+        path: path.resolve(__dirname, './../build'),
         // 输出的文件名配置
-        chunkFilename: '[name].chunk.js',
         filename: "bundle.js"
     },
     module: {
@@ -192,7 +274,7 @@ module.exports =  {
             {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
-                include: 'src',
+                include: appSrc,
                 loader: "babel-loader",
                 options: {
                     // 指定babel预处理转义
@@ -227,6 +309,10 @@ url-loader有一个重要的参数 `limit` ,这个参数用来设置打包文件
 配置url-loader：
 
 ```
+const path = require('path');
+
+const appSrc = path.resolve(__dirname, '../src')
+
 module.exports =  {
     mode: 'development',
     // 入口
@@ -236,9 +322,8 @@ module.exports =  {
         pathinfo: true,
         // 所有输出文件的目标路径
         // 必须是绝对路径（使用 Node.js 的 path 模块）
-        // path: path.resolve(__dirname, './../build'),
+        path: path.resolve(__dirname, './../build'),
         // 输出的文件名配置
-        chunkFilename: '[name].chunk.js',
         filename: "bundle.js"
     },
     module: {
@@ -246,7 +331,7 @@ module.exports =  {
             {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
-                include: src,
+                include: appSrc,
                 loader: "babel-loader"，
                 options: {
                     // 指定babel预处理转义
@@ -280,6 +365,10 @@ style-loader：将通过import形式导入到js中的css文件插入到`<style><
 在webpack中的配置如下：
 
 ```
+const path = require('path');
+
+const appSrc = path.resolve(__dirname, '../src')
+
 module.exports =  {
     mode: 'development',
     // 入口
@@ -289,9 +378,8 @@ module.exports =  {
         pathinfo: true,
         // 所有输出文件的目标路径
         // 必须是绝对路径（使用 Node.js 的 path 模块）
-        // path: path.resolve(__dirname, './../build'),
+        path: path.resolve(__dirname, './../build'),
         // 输出的文件名配置
-        chunkFilename: '[name].chunk.js',
         filename: "bundle.js"
     },
     module: {
@@ -299,7 +387,7 @@ module.exports =  {
             {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
-                include: src,
+                include: appSrc,
                 loader: "babel-loader"，
                 options: {
                     // 指定babel预处理转义
@@ -317,7 +405,7 @@ module.exports =  {
             // 针对css文件配置style-loader和css-loader
             {
                 test: /\.css$/,
-                include: src,
+                include: appSrc,
                 use: [
                         'style-loader',
                     {
@@ -335,8 +423,123 @@ module.exports =  {
 }
 ```
 
-如上所示，我们在针对同一类型的文件配置多个loader时。可以将loader声明在一个数组内，数组项可以是一个对象，也可以仅仅是一个字符串，这取决于你针对某个loader还有没有特殊的设置。比如我们在配置css-loader时，我们还声明了option选项，并在option选项内开启了minimize选项。但是在配置style-loader时，我们仅仅写了一个字符串。 需要注意的是，数组内loader的执行顺序是从数组的最后一项依次向前执行。所有我们将css-loader配置在了后面，它是先执行的。这更符合我们的处理逻辑，先对css进行处理，再插入到html中。
+如上所示，我们在针对同一类型的文件配置多个loader时。可以将loader声明在一个数组内，数组项可以是一个对象，也可以仅仅是一个字符串，这取决于你针对某个loader还有没有特殊的设置。比如我们在配置css-loader时，我们还声明了option选项，并在option选项内开启了minimize选项。但是在配置style-loader时，我们仅仅写了一个字符串。
+
+需要注意的是，数组内loader的执行顺序是从数组的最后一项依次向前执行。所有我们将css-loader配置在了后面，它是先执行的。这更符合我们的处理逻辑，先对css进行处理，再插入到html中。
 
 ### 插件
 
+插件是webpack的一个极其重要的功能，webpack提供了丰富的插件接口，使开发者能够自由的开发插件来拓展webpack的功能。
+
+这里我们拿大名鼎鼎的 `HtmlWebpackPlugin` 来举例。
+
+设想一个场景，在我们打包时，我们需要手动的去创建一个html文件，然后在其中引入我们打包好的各种文件。即使我们创建好html文件后，由于我们的文件设置了hash形式的文件名称。我们在每次打包后还需要根据hash名称的变动去改变我们的html内引入的文件名称，这是非常低级的重复劳作。
+
+`HtmlWebpackPlugin` 为我们解决了这个问题。`HtmlWebpackPlugin` 能够根据我们提供的模板自动生成html文件，并引入打包后的内容。
+
+下面介绍一下`HtmlWebpackPlugin`的使用过程。
+
+安装：`npm install --save-dev html-webpack-plugin`
+
+安装完成后，我们先在项目的根目录创建一个文件夹`public`，在其中创建一个模板文件`index.html`。
+
+```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+</html>
+```
+
+然后在webpack中配置插件：
+
+```
+const path = require('path');
+
+const appSrc = path.resolve(__dirname, '../src')
+// 引入html-webpack-plugin插件
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+module.exports =  {
+    mode: 'development',
+    // 入口
+    entry: './src/index.js',
+    // 出口
+    output: {
+        pathinfo: true,
+        // 所有输出文件的目标路径
+        // 必须是绝对路径（使用 Node.js 的 path 模块）
+        path: path.resolve(__dirname, './../build'),
+        // 输出的文件名配置
+        filename: "bundle.js"
+    },
+    module: {
+        rules: [
+            {
+                test: /\.(js|jsx)$/,
+                exclude: /node_modules/,
+                include: appSrc,
+                loader: "babel-loader",
+                options: {
+                    // 指定babel预处理转义
+                    presets: ["@babel/preset-env", "@babel/preset-react"]
+                }
+            },
+            {
+                test: /\.(png|jpg|gif)$/,
+                loader: "url-loader",
+                options: {
+                    // 设置url-loader转DataURL的文件大小上限
+                    limit: 10000
+                }
+            },
+            // 针对css文件配置style-loader和css-loader
+            {
+                test: /\.css$/,
+                include: appSrc,
+                use: [
+                        'style-loader',
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            // 可以包含一些配置
+
+                            minimize: true // 开发模式下应该设为false，优化打包速度
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    plugins: [
+        // HTML模板文件处理插件
+        new HtmlWebpackPlugin({
+            file: 'index.html', // 生成的文件名称
+            template: 'public/index.html' // 指定模板文件
+        })
+    ],
+}
+```
+
+现在我们在命令行中执行`npm build`,webpack将为我们打包src目录内的文件。并将在根目录生成一个build文件，将打包的内容输出在里面。
+
+这时候，我们其实已经完成了webpack的基本配置。我们现在的配置是基于development模式进行打包的，没有进行压缩，很显然这并不能做为一个可发布的版本。要修改为生产模式其实也很简单，我们可以通过两种方式去实现。
+
+1. 修改配置文件中的mode选项，将development修改为production。
+
+2. 删除配置中的mode选项，修改package.json scripts中的执行脚本为 `webpack --mode production --config ./config/webpack.config.js`。
+
+在配置2中，使用--mode 能够为webpack-cli制定打包模式。
+
+修改后再次打包，这时候代码就是经过压缩后的了。
+
 ### devServer
+
+### 进阶
