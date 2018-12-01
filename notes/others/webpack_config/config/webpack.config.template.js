@@ -66,7 +66,7 @@ module.exports = {
             {
                 test: /\.css$/,
                 use: [
-                    // 当开发模式时，使用style-loader直接引入css样式，不进行压缩。
+                    // 当开发模式时，使用style-loader直接插入css样式
                     devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
                     {
                         loader: 'css-loader',
