@@ -91,7 +91,7 @@ module.exports = merge(common, {
         splitChunks: false,
     },
     devServer: {
-        // 目录
+        // 告诉服务器从哪个目录中提供内容
         // contentBase: '.',
 
         // 启用https
