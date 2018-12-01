@@ -14,8 +14,9 @@ module.exports = merge(common, {
         pathinfo: true,
         // 所有输出文件的目标路径
         // 必须是绝对路径（使用 Node.js 的 path 模块）
-        // 输出的文件名配置
+        // chunk名称配置
         chunkFilename: '[name].chunk.js',
+        // 输出的文件名配置
         filename: "bundle.js"
     },
     module: {
