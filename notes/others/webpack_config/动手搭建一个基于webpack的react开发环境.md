@@ -661,7 +661,15 @@ module.exports =  {
 
 #### devtool
 
-#### 使用postcss-loader自动补全浏览器前缀
+webpack中devtool选项用来控制是否生成，以及如何生成 source map。
+
+想要了解source map，可以看一下[这篇文章](http://www.ruanyifeng.com/blog/2013/01/javascript_source_map.html)。简单的说，source map就是帮助我们定位到错误信息位置的文件。正确的配置source map，能够提高开发效率，更快的定位到错误位置。
+
+webpack中devtool有很多种配置，我们可以在 [这里](https://webpack.docschina.org/configuration/devtool/#%E5%AF%B9%E4%BA%8E%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83) 了解它。
+
+在开发环境中，更推荐使用`cheap-module-eval-source-map`,它能帮助我们准确的定位到错误源代码位置的同时，也能提供更快的构建速度和构建性能。
+
+而在生产环境中，可以不启动任何source map（不配置devtool项），也可以使用`source-map`。需要注意的是，不要将source map部署到生产服务器中。
 
 #### 为svg文件配置loader
 
@@ -823,7 +831,6 @@ const appSrc = path.resolve(__dirname,'../src')
 
 module.exports = merge(common, {
     mode: 'production',
-    devtool: 'source-map',
     // 出口
     output: {
         pathinfo: false,
@@ -908,4 +915,8 @@ const CleanWebpackPlugin = require('clean-webpack-plugin')
 
 注意，该插件只用于生产环境配置。
 
-#### optimization
+## 总结
+
+通过上述内容，我们了解了webpack的基础的配置，以及各种概念的扫盲。其实这只能算是基础用法，要实现一个真正完善的webpack配置肯定远远不止这些。这篇文章的面向对象为初学者，所有在这里就不过多的介绍那些比较复杂的概念。
+
+在下篇文章，会介绍一些更高级的配置和概念。如optimization、tree shaking、生产环境下的构建速度优化等。

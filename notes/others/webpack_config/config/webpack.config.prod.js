@@ -10,7 +10,6 @@ const appSrc = path.resolve(__dirname,'../src')
 
 module.exports = merge(common, {
     mode: 'production',
-    devtool: 'source-map',
     // 出口
     output: {
         pathinfo: false,
