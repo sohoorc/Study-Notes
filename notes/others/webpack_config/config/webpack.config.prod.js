@@ -118,9 +118,6 @@ module.exports = merge(common, {
     },
     //插进的引用, 压缩，分离美化
     plugins: [
-
-        // HMR 模块热替换，！！！不要再生产环境中使用
-        // new webpack.HotModuleReplacementPlugin(),
         new MiniCssExtractPlugin({
             filename: "css/[name].[hash].css",
             chunkFilename: "css/[id].[hash].css",
