@@ -11,29 +11,33 @@ function bundleCompress(path) {
       fs.mkdir('bundles', function () {
         bundle(path)
       })
-    }else{
+    } else {
       bundle(path)
     }
   })
 }
 
-function bundle(path){
-  let date =  new Date(),
+function bundle(path) {
+  let date = new Date(),
+    year = date.getFullYear(),
+    mounth = date.getMonth() + 1,
+    day = date.getUTCDate(),
     hours = date.getHours(),
-    min = date.getMinutes(),
-    sec = date.getSeconds();
+    min = date.getMinutes();
 
-  let fileName = 'XXXX系统-'+date.toLocaleDateString().replace(/\-/g,'')+hours+min+sec;
+  mounth = mounth < 10 ? '0' + mounth : mounth;
+  day = date < 10 ? '0' + day : day;
+  hours = hours < 10 ? '0' + hours : hours;
+
+  let fileName = 'xxxx-' + year+'_'+mounth+'_'+day+'_'+hours+'_'+min;
   let output = fs.createWriteStream('./bundles/' + fileName + '.zip');
   let archive = archiver('zip', {
     zlib: { level: 9 } // Sets the compression level.
   });
 
-  // pipe archive data to the file
   archive.pipe(output);
 
   archive.directory(path, fileName);
-  // archive.directory(path, 'new-subdir');
   archive.finalize();
 }
 
