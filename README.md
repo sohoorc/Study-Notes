@@ -14,7 +14,7 @@
 
 ## 优化
 
-- [防抖和节流](https://github.com/sohoorc/Study-Notes/blob/master/notes/others/%E9%98%B2%E6%8A%96%E5%92%8C%E8%8A%82%E6%B5%81.html)
+- [防抖和节流](https://github.com/sohoorc/Study-Notes/blob/master/notes/basic/%E9%98%B2%E6%8A%96%E5%92%8C%E8%8A%82%E6%B5%81.html)
 
 ## React
 
