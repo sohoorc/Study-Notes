@@ -3,7 +3,7 @@ const gm = require('gm');
 const fs = require('fs');
 
 const imgHanding = function (imgPath, outputPath) {
-  gm(imgPath).resize(375).write(outputPath,(err,res)=>{
+  gm(imgPath).resize(1242,2208,"!").write(outputPath,(err,res)=>{
     if(err) throw err;
   })
 }
